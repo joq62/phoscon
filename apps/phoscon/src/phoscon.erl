@@ -272,7 +272,8 @@ handle_info(timeout, State) ->
 
     pong=rd:call(controller,ping,[],5000),
 
-    {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
+ %   {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
+    {ConbeeAddr,ConbeePort,ConbeeKey}={1,2,3},
     application:ensure_all_started(gun),
     os:cmd("docker restart "++?ConbeeContainer),
     timer:sleep(5*1000),
