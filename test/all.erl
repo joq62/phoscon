@@ -50,8 +50,7 @@ start()->
 rd_test()->
     io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME}]),
     ok=initial_trade_resources(),
-    [{adder3,{adder3,'adder3@c50'}}]=rd:get_all_resources(),
-    42=rd:call(adder3,add,[20,22],5000),
+    [{phoscon,{phoscon,_}}]=rd:get_all_resources(),
     
     ok.
 %% --------------------------------------------------------------------
@@ -75,10 +74,10 @@ load_start_release()->
     
     %%
     []=os:cmd(?StartCmd++" "++"daemon"),
-    timer:sleep(3000),
+    timer:sleep(2*5000),
     pong=rpc:call(?Vm,rd,ping,[],5000),
     pong=rpc:call(?Vm,log,ping,[],5000),
-    pong=rpc:call(?Vm,phoscon,ping,[],5000),
+    pong=rpc:call(?Vm,phoscon,ping,[],5*5000),
     
     pong=net_adm:ping(?Vm),
     

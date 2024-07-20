@@ -35,6 +35,7 @@
 %% @end
 %%--------------------------------------------------------------------
 get_conbee_config(Application)->
+    
     {ok,Config}=rd:call(controller,get_application_config,[Application],5000),
     ConbeeAddr=lists:keyfind(conbee_addr,1,Config),
     ConbeePort=lists:keyfind(conbee_port,1,Config),
