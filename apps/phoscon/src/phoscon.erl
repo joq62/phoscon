@@ -274,7 +274,9 @@ handle_info(timeout, State) ->
 
     ?LOG_NOTICE("AllResources ",AllResources),
     
-    {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
+  %  {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
+    {ConbeeAddr,ConbeePort,ConbeeKey}={1,2,3},
+    
     application:ensure_all_started(gun),
     DockerRestart=rpc:call(node(),os,cmd,["docker restart "++?ConbeeContainer],3*5000),
    io:format("DockerRestart ~p~n",[{DockerRestart,?MODULE,?LINE,?FUNCTION_NAME}]), 
