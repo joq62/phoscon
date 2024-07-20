@@ -1,0 +1,10 @@
+{application,phoscon,
+             [{description,"An OTP application"},
+              {vsn,"0.1.0"},
+              {registered,[]},
+              {mod,{phoscon_app,[]}},
+              {applications,[kernel,stdlib]},
+              {env,[]},
+              {modules,[lib_phoscon,phoscon,phoscon_app,phoscon_sup]},
+              {licenses,["Apache-2.0"]},
+              {links,[]}]}.

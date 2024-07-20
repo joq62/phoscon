@@ -13,10 +13,10 @@
  
 -export([start/0]).
 
--define(TargetDir,"<ApplicationName>_dir").
--define(Vm,<ApplicationName>@c50).
--define(TarFile,"<ApplicationName>.tar.gz").
--define(App,"<ApplicationName>").
+-define(TargetDir,"phoscon_dir").
+-define(Vm,phoscon@c50).
+-define(TarFile,"phoscon.tar.gz").
+-define(App,"phoscon").
 -define(TarSrc,"release"++"/"++?TarFile).
 -define(StartCmd,"./"++?TargetDir++"/"++"bin"++"/"++?App).
 
@@ -78,7 +78,7 @@ load_start_release()->
     timer:sleep(3000),
     pong=rpc:call(?Vm,rd,ping,[],5000),
     pong=rpc:call(?Vm,log,ping,[],5000),
-    pong=rpc:call(?Vm,adder3,ping,[],5000),
+    pong=rpc:call(?Vm,phoscon,ping,[],5000),
     
     pong=net_adm:ping(?Vm),
     
@@ -104,6 +104,7 @@ load_start_release()->
 setup()->
     io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME}]),
 
+    pong=rpc:call(ctrl@c50,controller,ping,[],6000),
     ok=application:start(rd),
     ok=initial_trade_resources(),
     
@@ -112,7 +113,7 @@ setup()->
 
 initial_trade_resources()->
     [rd:add_local_resource(ResourceType,Resource)||{ResourceType,Resource}<-[]],
-    [rd:add_target_resource_type(TargetType)||TargetType<-[<ApplicationName>]],
+    [rd:add_target_resource_type(TargetType)||TargetType<-[phoscon]],
     rd:trade_resources(),
     timer:sleep(3000),
     ok.

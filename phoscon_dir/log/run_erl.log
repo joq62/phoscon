@@ -1,0 +1,8 @@
+run_erl [238898] Sat Jul 20 07:28:34 2024
+Args before exec of shell:
+run_erl [238898] Sat Jul 20 07:28:34 2024
+argv[0] = sh
+run_erl [238898] Sat Jul 20 07:28:34 2024
+argv[1] = -c
+run_erl [238898] Sat Jul 20 07:28:34 2024
+argv[2] = exec "/home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/bin/phoscon" "console" ''  --relx-disable-hooks

@@ -1,0 +1,108 @@
+
+=====
+===== LOGGING STARTED Sat Jul 20 07:28:34 CEST 2024
+=====
+Exec: /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/erts-12.2.1/bin/erlexec -boot /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/releases/0.1.0/start -mode embedded -boot_var SYSTEM_LIB_DIR /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/lib -config /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/releases/0.1.0/sys.config -args_file /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir/releases/0.1.0/vm.args -- console  --relx-disable-hooks
+Root: /home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir
+/home/joq62/erlang/simple_system/applications/phoscon/phoscon_dir
+Erlang/OTP 24 [erts-12.2.1] [source] [64-bit] [smp:16:16] [ds:16:16:10] [async-threads:30] [jit]
+
+Start {rd,init,169}
+timeout signal {rd,339}
+=NOTICE REPORT==== 20-Jul-2024::07:28:34.850538 ===
+"Server started "
+Eshell V12.2.1  (abort with ^G)
+(phoscon@c50)1>  |  | error |  |  |  |  |  | Generic server phoscon terminating. Reason: {'function not exported',[{lists,keyfind,[conbee_addr,{error,[eexists_resources]}],[]},{lib_phoscon,get_conbee_config,1,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl"},{line,39}]},{phoscon,handle_info,2,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl"},{line,268}]},{gen_server,try_dispatch,4,[{file,"gen_server.erl"},{line,695}]},{gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,771}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}. Last message: timeout. State: {state,undefined,undefined,undefined,undefined}. | 
+=ERROR REPORT==== 20-Jul-2024::07:28:35.889817 ===
+** Generic server phoscon terminating 
+** Last message in was timeout
+** When Server state == {state,undefined,undefined,undefined,undefined}
+** Reason for termination ==
+** {'function not exported',
+       [{lists,keyfind,[conbee_addr,{error,[eexists_resources]}],[]},
+        {lib_phoscon,get_conbee_config,1,
+            [{file,
+                 "/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl"},
+             {line,39}]},
+        {phoscon,handle_info,2,
+            [{file,
+                 "/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl"},
+             {line,268}]},
+        {gen_server,try_dispatch,4,[{file,"gen_server.erl"},{line,695}]},
+        {gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,771}]},
+        {proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}
+
+ |  | error |  |  |  |  |  | crasher: initial call: phoscon:init/1, pid: <0.289.0>, registered_name: phoscon, error: {undef,[{lists,keyfind,[conbee_addr,{error,[eexists_resources]}],[]},{lib_phoscon,get_conbee_config,1,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl"},{line,39}]},{phoscon,handle_info,2,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl"},{line,268}]},{gen_server,try_dispatch,4,[{file,"gen_server.erl"},{line,695}]},{gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,771}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}, ancestors: [phoscon_sup,<0.287.0>], message_queue_len: 0, messages: [], links: [<0.288.0>], dictionary: [], trap_exit: false, status: running, heap_size: 10958, stack_size: 29, reductions: 27688; neighbours: | 
+=CRASH REPORT==== 20-Jul-2024::07:28:35.891925 ===
+  crasher:
+    initial call: phoscon:init/1
+    pid: <0.289.0>
+    registered_name: phoscon
+    exception error: undefined function lists:keyfind/2
+      in function  lib_phoscon:get_conbee_config/1 (/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl, line 39)
+      in call from phoscon:handle_info/2 (/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl, line 268)
+      in call from gen_server:try_dispatch/4 (gen_server.erl, line 695)
+      in call from gen_server:handle_msg/6 (gen_server.erl, line 771)
+    ancestors: [phoscon_sup,<0.287.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.288.0>]
+    dictionary: []
+    trap_exit: false
+    status: running
+    heap_size: 10958
+    stack_size: 29
+    reductions: 27688
+  neighbours:
+
+ |  | error |  |  |  |  |  | Supervisor: {local,phoscon_sup}. Context: child_terminated. Reason: {undef,[{lists,keyfind,[conbee_addr,{error,[eexists_resources]}],[]},{lib_phoscon,get_conbee_config,1,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl"},{line,39}]},{phoscon,handle_info,2,[{file,"/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl"},{line,268}]},{gen_server,try_dispatch,4,[{file,"gen_server.erl"},{line,695}]},{gen_server,handle_msg,6,[{file,"gen_server.erl"},{line,771}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,226}]}]}. Offender: id=phoscon,pid=<0.289.0>. | 
+=SUPERVISOR REPORT==== 20-Jul-2024::07:28:35.893294 ===
+    supervisor: {local,phoscon_sup}
+    errorContext: child_terminated
+    reason: {undef,
+                [{lists,keyfind,[conbee_addr,{error,[eexists_resources]}],[]},
+                 {lib_phoscon,get_conbee_config,1,
+                     [{file,
+                          "/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/lib_phoscon.erl"},
+                      {line,39}]},
+                 {phoscon,handle_info,2,
+                     [{file,
+                          "/home/joq62/erlang/simple_system/applications/phoscon/apps/phoscon/src/phoscon.erl"},
+                      {line,268}]},
+                 {gen_server,try_dispatch,4,
+                     [{file,"gen_server.erl"},{line,695}]},
+                 {gen_server,handle_msg,6,
+                     [{file,"gen_server.erl"},{line,771}]},
+                 {proc_lib,init_p_do_apply,3,
+                     [{file,"proc_lib.erl"},{line,226}]}]}
+    offender: [{pid,<0.289.0>},
+               {id,phoscon},
+               {mfargs,{phoscon,start_link,[]}},
+               {restart_type,permanent},
+               {significant,false},
+               {shutdown,5000},
+               {child_type,worker}]
+
+=SUPERVISOR REPORT==== 20-Jul-2024::07:28:35.894001 ===
+    supervisor: {local,phoscon_sup}
+    errorContext: shutdown
+    reason: reached_max_restart_intensity
+    offender: [{pid,<0.289.0>},
+               {id,phoscon},
+               {mfargs,{phoscon,start_link,[]}},
+               {restart_type,permanent},
+               {significant,false},
+               {shutdown,5000},
+               {child_type,worker}]
+
+ |  | error |  |  |  |  |  | Supervisor: {local,phoscon_sup}. Context: shutdown. Reason: reached_max_restart_intensity. Offender: id=phoscon,pid=<0.289.0>. | 
+ |  | notice |  |  |  |  |  | Application: phoscon. Exited: shutdown. Type: permanent. | 
+=INFO REPORT==== 20-Jul-2024::07:28:35.894860 ===
+    application: phoscon
+    exited: shutdown
+    type: permanent
+
+{"Kernel pid terminated",application_controller,"{application_terminated,phoscon,shutdown}"}
+Kernel pid terminated (application_controller) ({application_terminated,phoscon,shutdown})
+
+Crash dump is being written to: erl_crash.dump...done

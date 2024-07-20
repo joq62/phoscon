@@ -57,9 +57,9 @@
 %%-------------------------------------------------------------------
 
 -record(state,{device_info,
-	       ip_addr,
-	       ip_port,
-	       crypto
+	       conbee_addr,
+	       conbee_port,
+	       conbee_key
 	      }).
 
 
@@ -159,12 +159,12 @@ init([]) ->
 %% --------------------------------------------------------------------
 
 handle_call({get_maps},_From, State) ->
-    ConbeeAddr=State#state.ip_addr,
-    ConbeePort=State#state.ip_port,
-    Crypto=State#state.crypto,
+    ConbeeAddr=State#state.conbee_addr,
+    ConbeePort=State#state.conbee_port,
+    Conbee_Key=State#state.conbee_key,
  
-    LightsMaps=lib_phoscon:get_maps("lights",ConbeeAddr,ConbeePort,Crypto),
-    SensorsMaps=lib_phoscon:get_maps("sensors",ConbeeAddr,ConbeePort,Crypto),
+    LightsMaps=lib_phoscon:get_maps("lights",ConbeeAddr,ConbeePort,Conbee_Key),
+    SensorsMaps=lib_phoscon:get_maps("sensors",ConbeeAddr,ConbeePort,Conbee_Key),
     Reply=[{"lights",LightsMaps},{"sensors",SensorsMaps}],
     {reply, Reply, State};
 
@@ -173,19 +173,19 @@ handle_call({get_maps},_From, State) ->
 %% Lights 
 %%---------------------------------------------------------------------
 handle_call({get_maps,"lights"},_From, State) ->
-    ConbeeAddr=State#state.ip_addr,
-    ConbeePort=State#state.ip_port,
-    Crypto=State#state.crypto,
+    ConbeeAddr=State#state.conbee_addr,
+    ConbeePort=State#state.conbee_port,
+    Conbee_Key=State#state.conbee_key,
  
-    Reply=lib_phoscon:get_maps("lights",ConbeeAddr,ConbeePort,Crypto),
+    Reply=lib_phoscon:get_maps("lights",ConbeeAddr,ConbeePort,Conbee_Key),
     {reply, Reply, State};
 
 handle_call({set_state,Id,Key,Value,"lights"},_From, State) ->
     DeviceType="lights",
-    ConbeeAddr=State#state.ip_addr,
-    ConbeePort=State#state.ip_port,
-    Crypto=State#state.crypto,
-    Reply=lib_phoscon:set_state(Id,Key,Value,DeviceType,ConbeeAddr,ConbeePort,Crypto),
+    ConbeeAddr=State#state.conbee_addr,
+    ConbeePort=State#state.conbee_port,
+    Conbee_Key=State#state.conbee_key,
+    Reply=lib_phoscon:set_state(Id,Key,Value,DeviceType,ConbeeAddr,ConbeePort,Conbee_Key),
     {reply, Reply, State};
 
 
@@ -193,19 +193,19 @@ handle_call({set_state,Id,Key,Value,"lights"},_From, State) ->
 %%  Sensors 
 %%---------------------------------------------------------------------
 handle_call({get_maps,"sensors"},_From, State) ->
-    ConbeeAddr=State#state.ip_addr,
-    ConbeePort=State#state.ip_port,
-    Crypto=State#state.crypto,
+    ConbeeAddr=State#state.conbee_addr,
+    ConbeePort=State#state.conbee_port,
+    Conbee_Key=State#state.conbee_key,
 
-    Reply=lib_phoscon:get_maps("sensors",ConbeeAddr,ConbeePort,Crypto),
+    Reply=lib_phoscon:get_maps("sensors",ConbeeAddr,ConbeePort,Conbee_Key),
     {reply, Reply, State};
 
 handle_call({set_state,Id,Key,Value,"sensors"},_From, State) ->
     DeviceType="sensors",
-    ConbeeAddr=State#state.ip_addr,
-    ConbeePort=State#state.ip_port,
-    Crypto=State#state.crypto,
-    Reply=lib_phoscon:set_state(Id,Key,Value,DeviceType,ConbeeAddr,ConbeePort,Crypto),
+    ConbeeAddr=State#state.conbee_addr,
+    ConbeePort=State#state.conbee_port,
+    Conbee_Key=State#state.conbee_key,
+    Reply=lib_phoscon:set_state(Id,Key,Value,DeviceType,ConbeeAddr,ConbeePort,Conbee_Key),
     {reply, Reply, State};
 
 %%---------------------------------------------------------------------
@@ -252,6 +252,11 @@ handle_info({gun_response,_,_,_,_,_}, State) ->
 
 handle_info(timeout, State) -> 
     
+    % to be removed used during test
+    {ok,HostName}=net:gethostname(),
+    ControllerNode=list_to_atom("ctrl"++"@"++HostName),
+    rpc:call(ControllerNode,controller,ping,[],5000),
+    
      %% Set up logdir 
     file:make_dir(?MainLogDir),
     [NodeName,_HostName]=string:tokens(atom_to_list(node()),"@"),
@@ -265,6 +270,8 @@ handle_info(timeout, State) ->
     rd:trade_resources(),
     timer:sleep(1000),
 
+    pong=rd:call(controller,ping,[],5000),
+
     {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
     application:ensure_all_started(gun),
     os:cmd("docker restart "++?ConbeeContainer),
@@ -272,14 +279,14 @@ handle_info(timeout, State) ->
     
     ?LOG_NOTICE("Server started ",
 		[?MODULE,
-		ip_addr,ConbeeAddr,
-		ip_port,ConbeePort,
-		crypto,ConbeeKey
+		conbee_addr,ConbeeAddr,
+		conbee_port,ConbeePort,
+		conbee_key,ConbeeKey
 		]),
     NewState=State#state{device_info=undefined,
-			 ip_addr=ConbeeAddr,
-			 ip_port=ConbeePort,
-			 crypto=ConbeeKey},
+			 conbee_addr=ConbeeAddr,
+			 conbee_port=ConbeePort,
+			 conbee_key=ConbeeKey},
     
     {noreply, NewState};
 
