@@ -250,13 +250,13 @@ handle_info({gun_up,_,http}, State) ->
 handle_info({gun_response,_,_,_,_,_}, State) -> 
     {noreply, State};
 
-handle_info(timeout, State) -> 
-    io:format("Timeout ~p~n",[{?MODULE,?LINE,?FUNCTION_NAME}]),  
+handle_info(timeout, State) ->  
     % to be removed used during test
     {ok,HostName}=net:gethostname(),
     ControllerNode=list_to_atom("ctrl"++"@"++HostName),
     Pong=rpc:call(ControllerNode,controller,ping,[],5000),
-    io:format("Pong ~p~n",[{Pong,?MODULE,?LINE,?FUNCTION_NAME}]),
+    ?LOG_NOTICE("Pong ",Pong),
+ 
      %% Set up logdir 
     file:make_dir(?MainLogDir),
     [NodeName,_HostName]=string:tokens(atom_to_list(node()),"@"),
@@ -270,9 +270,10 @@ handle_info(timeout, State) ->
     rd:trade_resources(),
     timer:sleep(1000),
 
-    io:format("after rd trade ~p~n",[{?MODULE,?LINE,?FUNCTION_NAME}]),  
-    pong=rd:call(controller,ping,[],5000),
+    AllResources=rd:get_all_resources(),
 
+    ?LOG_NOTICE("AllResources ",AllResources),
+    
     {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
     application:ensure_all_started(gun),
     DockerRestart=rpc:call(node(),os,cmd,["docker restart "++?ConbeeContainer],3*5000),
