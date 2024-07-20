@@ -1,0 +1,12 @@
+[{<<"adder_service">>,
+  {git,"https://github.com/joq62/adder_service.git",
+       {ref,"423fb5178f514d5e9cdf9d78a495757b01251aee"}},
+  0},
+ {<<"log">>,
+  {git,"https://github.com/joq62/log.git",
+       {ref,"8a9b64067c79d11e7f4ffcd2fb79430d9c0735c7"}},
+  0},
+ {<<"resource_discovery">>,
+  {git,"https://github.com/joq62/resource_discovery.git",
+       {ref,"4c07eacd3dfb57d593af4e80d03f945e587cb4b0"}},
+  0}].

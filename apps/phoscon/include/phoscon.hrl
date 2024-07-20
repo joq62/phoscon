@@ -1,0 +1,2 @@
+-define(PhosconApp,conbee).
+-define(ConbeeContainer,"deconz").
