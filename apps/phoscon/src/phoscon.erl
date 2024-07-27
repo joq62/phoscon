@@ -276,9 +276,7 @@ handle_info(timeout, State) ->
     {ConbeeAddr,ConbeePort,ConbeeKey}=case lib_phoscon:get_conbee_config(?PhosconApp) of
 					  {error,Err}->
 					      ?LOG_ALERT("Error ",Err),
-					      timer:sleep(3000),
-					      init:stop(),
-					      timer:sleep(3000);
+					      {na,na,na};
 					  {Addr,Port,Key}->
 					      ?LOG_NOTICE("{ConbeeAddr,ConbeePort,ConbeeKey} ",{Addr,Port,Key}),
 					      {Addr,Port,Key}
