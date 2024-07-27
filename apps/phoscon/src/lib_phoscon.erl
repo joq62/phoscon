@@ -36,14 +36,14 @@
 %%--------------------------------------------------------------------
 get_conbee_config(Application)->
     
-    case rd:call(controller,get_application_config,[Application],5000) of
+    case rd:call(controller,get_application_config,[Application],2*5000) of
 	 {ok,Config}->
 	    ConbeeAddr=lists:keyfind(conbee_addr,1,Config),
 	    ConbeePort=lists:keyfind(conbee_port,1,Config),
 	    ConbeeKey=lists:keyfind(conbee_key,1,Config),   
 	    {ConbeeAddr,ConbeePort,ConbeeKey};
 	Err ->
-	    {error,["Error during rd call to controller ",[Err]]}
+	    {error,["Error during rd call to controller ",Err]}
     end.
 
 %%--------------------------------------------------------------------

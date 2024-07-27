@@ -73,7 +73,9 @@ load_start_release()->
     []=os:cmd("tar -zxf "++?TarSrc++" -C "++?TargetDir),
     
     %%
-    []=os:cmd(?StartCmd++" "++"daemon"),
+     []=os:cmd(?StartCmd++" "++"daemon"),
+   % StartTest=os:cmd(?StartCmd++" "++"foreground"),
+   % io:format("StartTest ~p~n",[{StartTest,?MODULE,?LINE,?FUNCTION_NAME}]),
     timer:sleep(2*5000),    
     pong=net_adm:ping(?Vm),
 

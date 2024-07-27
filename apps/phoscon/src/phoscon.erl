@@ -273,8 +273,16 @@ handle_info(timeout, State) ->
     AllResources=rd:get_all_resources(),
     ?LOG_NOTICE("AllResources ",AllResources),
     
-    {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
-    ?LOG_NOTICE("{ConbeeAddr,ConbeePort,ConbeeKey} ",{ConbeeAddr,ConbeePort,ConbeeKey}),
+    {ConbeeAddr,ConbeePort,ConbeeKey}=case lib_phoscon:get_conbee_config(?PhosconApp) of
+					  {error,Err}->
+					      ?LOG_ALERT("Error ",Err),
+					      timer:sleep(3000),
+					      init:stop(),
+					      timer:sleep(3000);
+					  {Addr,Port,Key}->
+					      ?LOG_NOTICE("{ConbeeAddr,ConbeePort,ConbeeKey} ",{Addr,Port,Key}),
+					      {Addr,Port,Key}
+				      end,					  
     application:ensure_all_started(gun),
     DockerRestart=rpc:call(node(),os,cmd,["docker restart "++?ConbeeContainer],3*5000),
     ?LOG_NOTICE("DockerRestart ",DockerRestart),
