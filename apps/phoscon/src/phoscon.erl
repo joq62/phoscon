@@ -257,6 +257,7 @@ handle_info(timeout, State) ->
     Pong=rpc:call(ControllerNode,controller,ping,[],5000),
     ?LOG_NOTICE("Pong ",Pong),
  
+    timer:sleep(4000),
      %% Set up logdir 
     file:make_dir(?MainLogDir),
     [NodeName,_HostName]=string:tokens(atom_to_list(node()),"@"),
@@ -269,19 +270,15 @@ handle_info(timeout, State) ->
     [rd:add_target_resource_type(TargetType)||TargetType<-?TargetTypes],
     rd:trade_resources(),
     timer:sleep(1000),
-
     AllResources=rd:get_all_resources(),
-
     ?LOG_NOTICE("AllResources ",AllResources),
     
-  %  {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
-    {ConbeeAddr,ConbeePort,ConbeeKey}={1,2,3},
-    
+    {ConbeeAddr,ConbeePort,ConbeeKey}=lib_phoscon:get_conbee_config(?PhosconApp),
+    ?LOG_NOTICE("{ConbeeAddr,ConbeePort,ConbeeKey} ",{ConbeeAddr,ConbeePort,ConbeeKey}),
     application:ensure_all_started(gun),
     DockerRestart=rpc:call(node(),os,cmd,["docker restart "++?ConbeeContainer],3*5000),
-   io:format("DockerRestart ~p~n",[{DockerRestart,?MODULE,?LINE,?FUNCTION_NAME}]), 
-    timer:sleep(5*1000),
-    io:format(" ~p~n",[{?MODULE,?LINE,?FUNCTION_NAME}]),  
+    ?LOG_NOTICE("DockerRestart ",DockerRestart),
+    timer:sleep(5*1000),    
     ?LOG_NOTICE("Server started ",
 		[?MODULE,
 		conbee_addr,ConbeeAddr,

@@ -4,4 +4,4 @@
 -define(LocalResourceTuples,[{phoscon,{phoscon,node()}}]).
 
 %% I want following resource types
--define(TargetTypes,[controller,zigbee]). 
+-define(TargetTypes,[controller]). 
