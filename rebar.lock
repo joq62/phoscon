@@ -1,8 +1,32 @@
-[{<<"log">>,
+{"1.2.0",
+[{<<"cowboy">>,
+  {git,"https://github.com/ninenines/cowboy",
+       {ref,"b77dd29133365a11a4884af8f0fe432981d3f8a3"}},
+  0},
+ {<<"cowlib">>,
+  {git,"https://github.com/ninenines/cowlib",
+       {ref,"1c3d5defba28e92a88ce45c440d57e178ab1c514"}},
+  0},
+ {<<"gun">>,
+  {git,"https://github.com/ninenines/gun",
+       {ref,"e7dd9f227e46979d8073e71c683395a809b78cb4"}},
+  0},
+ {<<"jsx">>,{pkg,<<"jsx">>,<<"3.1.0">>},0},
+ {<<"log">>,
   {git,"https://github.com/joq62/log.git",
        {ref,"6329c78d7a3f69957637bdf0e23872a2834d002c"}},
+  0},
+ {<<"ranch">>,
+  {git,"https://github.com/ninenines/ranch",
+       {ref,"3190aef88aea04d6dce8545fe9b4574288903f44"}},
   0},
  {<<"rd">>,
   {git,"https://github.com/joq62/rd.git",
        {ref,"660946722279e021347c29744cd4dde87def87a2"}},
-  0}].
+  0}]}.
+[
+{pkg_hash,[
+ {<<"jsx">>, <<"D12516BAA0BB23A59BB35DCCAF02A1BD08243FCBB9EFE24F2D9D056CCFF71268">>}]},
+{pkg_hash_ext,[
+ {<<"jsx">>, <<"0C5CC8FDC11B53CC25CF65AC6705AD39E54ECC56D1C22E4ADB8F5A53FB9427F3">>}]}
+].
