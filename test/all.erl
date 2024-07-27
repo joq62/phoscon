@@ -103,7 +103,7 @@ load_start_release()->
 setup()->
     io:format("Start ~p~n",[{?MODULE,?FUNCTION_NAME}]),
 
-    pong=rpc:call(ctrl@c50,controller,ping,[],6000),
+%    pong=rpc:call(ctrl@c50,controller,ping,[],6000),
     ok=application:start(rd),
     ok=initial_trade_resources(),
     
