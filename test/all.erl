@@ -76,9 +76,8 @@ load_start_release()->
      []=os:cmd(?StartCmd++" "++"daemon"),
    % StartTest=os:cmd(?StartCmd++" "++"foreground"),
    % io:format("StartTest ~p~n",[{StartTest,?MODULE,?LINE,?FUNCTION_NAME}]),
-    timer:sleep(2*5000),    
+    timer:sleep(5*5000),    
     pong=net_adm:ping(?Vm),
-
     pong=rpc:call(?Vm,rd,ping,[],5000),
     pong=rpc:call(?Vm,log,ping,[],5000),
     pong=rpc:call(?Vm,phoscon,ping,[],5*5000),
