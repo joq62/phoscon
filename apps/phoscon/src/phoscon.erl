@@ -251,25 +251,25 @@ handle_info({gun_response,_,_,_,_,_}, State) ->
     {noreply, State};
 
 handle_info(timeout, State) ->  
+
+    ?LOG_NOTICE("timeout  ",[?MODULE,?LINE]),
+    timer:sleep(5000),
     % to be removed used during test
     {ok,HostName}=net:gethostname(),
     ControllerNode=list_to_atom("ctrl"++"@"++HostName),
     Pong=rpc:call(ControllerNode,controller,ping,[],5000),
-    ?LOG_NOTICE("Pong ",Pong),
- 
-    timer:sleep(4000),
+    ?LOG_NOTICE("Pong ",[Pong]),
+     timer:sleep(5000),
      %% Set up logdir 
     file:make_dir(?MainLogDir),
     [NodeName,_HostName]=string:tokens(atom_to_list(node()),"@"),
     NodeNodeLogDir=filename:join(?MainLogDir,NodeName),
     ok=log:create_logger(NodeNodeLogDir,?LocalLogDir,?LogFile,?MaxNumFiles,?MaxNumBytes),
-
-
  
     [rd:add_local_resource(ResourceType,Resource)||{ResourceType,Resource}<-?LocalResourceTuples],
     [rd:add_target_resource_type(TargetType)||TargetType<-?TargetTypes],
     rd:trade_resources(),
-    timer:sleep(1000),
+    timer:sleep(3000),
     AllResources=rd:get_all_resources(),
     ?LOG_NOTICE("AllResources ",AllResources),
     
